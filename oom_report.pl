@@ -38,7 +38,7 @@
 
       if (/Out of memory:/) { # end of OOM listing processes
          print;
-         <>;
+         $_ = <>;
          print;
          last;
       }
@@ -66,7 +66,7 @@
    }
 
    print "\n";
-   print leftpad("total") . " = " . leftpad(commify($total)) . "\n";
+   print leftpad("total") . " = " . leftpad(commify($total)) . "\n" if $total > 0.001;
 
    exit;
 

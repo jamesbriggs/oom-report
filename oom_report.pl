@@ -3,6 +3,7 @@
 # Program: oom_report.pl
 # Author: James Briggs, USA
 # Purpose: parse syslog OOM and report on memory use
+# License: Apache 2.0
 # Env: Perl5
 # Date: 2019 02 02
 # Usage: perl oom_report.pl <oom.txt
@@ -49,7 +50,7 @@
 
       my ($vm, $rss, undef, undef, undef, undef, $ps) = split;
 
-      if ($ps eq 'java') {
+      if ($ps eq 'java') { # uniqify the process name 'java'
          $ps .= $n;
          $n++;
       }

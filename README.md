@@ -26,8 +26,9 @@ docker-containe =         442,017
 ```
 Notes:
 
+* RAM is reported in KB.
 * Current kernels kill the largest user of RAM by default, so in this case the process named java2.
-* Note that 13 GB is accounted from 16 GB. Likely the remainder is used by the kernel itself.
+* 13 GB is accounted from 16 GB. Likely the remainder is used by the kernel itself.
 
-License: Apache 2
+License: Apache 2.0
 

@@ -2,7 +2,7 @@
 
 # Program: oom_report.pl
 # Author: James Briggs, USA
-# Purpose: parse syslog OOM and report on memory use
+# Purpose: parse syslog for first OOM and report on memory use
 # License: Apache 2.0
 # Link: https://github.com/jamesbriggs/oom-report
 # Env: Perl5
@@ -12,12 +12,14 @@
 
    my $DEBUG = 0;
 
+   my $VERSION = 0.1;
+
    my $hdr = ' tgid ';
    my $hdr_len = length($hdr);
 
    my %ps;
 
-   my $i = 0;
+   my $i = -1;
 
    while (<>) { # scan for syslog OOM columm header
       chomp;
@@ -28,7 +30,7 @@
       last if $i > -1;
    }
 
-   if (!$i) {
+   if ($i == -1) {
       print STDERR "error: header $hdr not found.\n";
       exit 1;
    }
@@ -66,8 +68,10 @@
       $total += $ps{$ps};
    }
 
-   print "\n";
-   print leftpad("total") . " = " . leftpad(commify($total)) . "\n" if $total > 0.001;
+   if ($total > 0.001) {
+      print "\n";
+      print leftpad("total") . " = " . leftpad(commify($total)) . "\n";
+   }
 
    exit;
 

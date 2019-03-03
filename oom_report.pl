@@ -2,11 +2,11 @@
 
 # Program: oom_report.pl
 # Author: James Briggs, USA
+# Date: 2019 02 02
 # Purpose: parse syslog for first OOM and report on memory use
 # License: Apache 2.0
 # Link: https://github.com/jamesbriggs/oom-report
 # Env: Perl5
-# Date: 2019 02 02
 # Usage: perl oom_report.pl <oom.txt
 # Note:
 
@@ -41,8 +41,7 @@
 
       if (/Out of memory:/) { # end of OOM listing processes
          print;
-         $_ = <>;
-         print;
+         print <>;
          last;
       }
 
@@ -56,12 +55,19 @@
       my ($vm, $rss, undef, undef, undef, undef, $ps) = split;
 
       if ($ps eq 'java') { # uniqify the process name 'java'
-         $ps .= $n;
+         $ps .= "$n";
          $n++;
       }
 
       $ps{$ps} += $vm + $rss;
    }
+
+   report();
+
+   exit;
+
+sub report {
+   my $total = 0;
 
    for my $ps (sort { $ps{$a} <=> $ps{$b} } keys %ps) {
       print leftpad($ps) . " = " . leftpad(commify($ps{$ps})) . "\n";
@@ -72,8 +78,7 @@
       print "\n";
       print leftpad("total") . " = " . leftpad(commify($total)) . "\n";
    }
-
-   exit;
+}
 
 sub commify {
     my $text = reverse $_[0];

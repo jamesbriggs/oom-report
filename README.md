@@ -1,11 +1,12 @@
 # oom-report
-Summarize RAM consumption per process from syslog OOM reports
+Summarize RAM consumption per process from syslog OOM reports.
 
 ```
 Usage: perl oom_report.pl < file.txt
 ```
 where file.txt contains an OOM listing extracted from /var/log/syslog. You must include the column header row.
 
+# Example
 
 Here's an example of running oom_report.pl on a 16 GB server:
 
@@ -24,11 +25,13 @@ docker-containe =         442,017
 
           total =      13,427,264
 ```
-Notes:
+Example notes:
 
+* 13 GB is accounted from 16 GB. Likely the remainder is used by the kernel itself.
 * RAM is reported in KB.
 * Current kernels kill the largest user of RAM by default, so in this case the process named java2.
-* 13 GB is accounted from 16 GB. Likely the remainder is used by the kernel itself.
 
-License: Apache 2.0
+# License
+
+Apache 2.0
 

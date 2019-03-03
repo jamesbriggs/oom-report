@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#
+
 # Program: oom_report.pl
 # Author: James Briggs, USA
 # Purpose: parse syslog OOM and report on memory use
@@ -10,6 +10,7 @@
 # Note:
 
    my $DEBUG = 0;
+
    my $hdr = ' tgid ';
 
    my %ps;

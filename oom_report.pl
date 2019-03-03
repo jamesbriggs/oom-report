@@ -31,7 +31,7 @@
    }
 
    if ($i == -1) {
-      print STDERR "error: header $hdr not found.\n";
+      print STDERR "error: header '$hdr' not found.\n";
       exit 1;
    }
 
@@ -75,8 +75,7 @@ sub report {
    }
 
    if ($total > 0.001) {
-      print "\n";
-      print leftpad("total") . " = " . leftpad(commify($total)) . "\n";
+      print "\n" . leftpad("total") . " = " . leftpad(commify($total)) . "\n";
    }
 }
 

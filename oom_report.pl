@@ -13,6 +13,7 @@
    my $DEBUG = 0;
 
    my $hdr = ' tgid ';
+   my $hdr_len = length($hdr);
 
    my %ps;
 
@@ -28,7 +29,7 @@
    }
 
    if (!$i) {
-      print STDERR "error: header $hdr not founnd.\n";
+      print STDERR "error: header $hdr not found.\n";
       exit 1;
    }
 
@@ -46,9 +47,9 @@
       chomp;
 
       # skip over to columns of interest
-      $_ = substr($_, $i+length($hdr));
+      $_ = substr($_, $i+$hdr_len);
 
-      print substr($_, $i+length($hdr)) if $DEBUG;
+      print substr($_, $i+$hdr_len) if $DEBUG;
 
       my ($vm, $rss, undef, undef, undef, undef, $ps) = split;
 

@@ -10,6 +10,9 @@
 # Usage: perl oom_report.pl <oom.txt
 # Note:
 
+use strict;
+use warnings;
+
    my $DEBUG = 0;
 
    my $VERSION = 0.1;

@@ -4,6 +4,7 @@
 # Author: James Briggs, USA
 # Purpose: parse syslog OOM and report on memory use
 # License: Apache 2.0
+# Link: https://github.com/jamesbriggs/oom-report
 # Env: Perl5
 # Date: 2019 02 02
 # Usage: perl oom_report.pl <oom.txt
@@ -17,7 +18,7 @@
 
    my $i = 0;
 
-   while (<>) { # scan for syslog OOM columm headers
+   while (<>) { # scan for syslog OOM columm header
       chomp;
       next if /^$/;
 
@@ -44,7 +45,7 @@
 
       chomp;
 
-      # skip over to columns of interest ...
+      # skip over to columns of interest
       $_ = substr($_, $i+length($hdr));
 
       print substr($_, $i+length($hdr)) if $DEBUG;

@@ -1,10 +1,10 @@
 # oom-report
-Summarize RAM consumption per process from syslog OOM reports.
+Summarize RAM consumption per process from syslog OOM reports by adding vm and rss columns.
 
 ```
 Usage: perl oom_report.pl < file.txt
 ```
-where file.txt contains an OOM listing extracted from /var/log/syslog. You must include the column header row.
+where file.txt contains an OOM listing extracted from /var/log/syslog. You must include the column header row. If you include a complete syslog file, it will find the first OOM.
 
 # Example
 
@@ -18,10 +18,10 @@ $ perl oom_report.pl < myoom.txt
         dockerd =         297,009
 docker-containe =         442,017
           agent =         584,720
-          java3 =         877,946
-          java1 =       1,205,023
+          java3 =         877,946 (dd-agent)
+          java1 =       1,205,023 (logstash)
           nginx =       2,926,052
-          java2 =       5,608,659
+          java2 =       5,608,659 (app server)
 
           total =      13,427,264
 ```

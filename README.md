@@ -23,7 +23,7 @@ docker-containe =         442,017
           nginx =       2,926,052
           java2 =       5,608,659 (app server)
 
-          total =      13,427,264
+ total (vm+rss) =      13,427,264 KB
 ```
 Example notes:
 

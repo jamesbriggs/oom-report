@@ -18,7 +18,6 @@ use warnings;
    my $VERSION = 0.1;
 
    my $hdr = ' tgid ';
-   my $hdr_len = length($hdr);
 
    my %ps;
 
@@ -34,7 +33,7 @@ use warnings;
    }
 
    if ($i == -1) {
-      print STDERR "error: header '$hdr' not found.\n";
+      print STDERR "info: header '$hdr' not found.\n";
       exit 1;
    }
 
@@ -44,25 +43,28 @@ use warnings;
 
       if (/Out of memory:/) { # end of OOM listing processes
          print;
-         print <>;
+         $_ = <>;
+         print;
          last;
       }
 
       chomp;
 
-      # skip over to columns of interest
-      $_ = substr($_, $i+$hdr_len);
+# Mar 10 18:36:05 vpc-prod2-external-013 kernel: [11311855.321286] [ pid ]   uid  tgid total_vm      rss nr_ptes nr_pmds swapents oom_score_adj name
+# Mar 10 18:36:05 vpc-prod2-external-013 kernel: [11311855.321291] [  505]     0   505    18155     9776      41       3        0             0 systemd-journal
 
-      print substr($_, $i+$hdr_len) if $DEBUG;
 
-      my ($vm, $rss, undef, undef, undef, undef, $ps) = split;
+      if (my ($pid, $vm, $rss, $ps) = $_ =~ /\[ *(\d+)\] +\d+ +\d+ +(\d+) +(\d+).+ ([()\w-]+)$/) {
+         if ($ps eq 'java') { # uniqify the process name 'java'
+            $ps .= "$n";
+            $n++;
+         }
 
-      if ($ps eq 'java') { # uniqify the process name 'java'
-         $ps .= "$n";
-         $n++;
+         $ps{$ps} += $vm + $rss;
       }
-
-      $ps{$ps} += $vm + $rss;
+      else {
+         print "NF: $_\n";
+      }
    }
 
    report();
@@ -78,7 +80,7 @@ sub report {
    }
 
    if ($total > 0.001) {
-      print "\n" . leftpad("total") . " = " . leftpad(commify($total)) . "\n";
+      print "\n" . leftpad("total (vm+rss)") . " = " . leftpad(commify($total)) . " KB\n";
    }
 }
 
@@ -91,4 +93,3 @@ sub commify {
 sub leftpad {
    sprintf("%15s", shift);
 }
-
